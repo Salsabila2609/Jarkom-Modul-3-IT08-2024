@@ -9,6 +9,7 @@
 
 ### Topologi
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/0c4c27c9-49e8-47ed-8f20-cd43aa7cb738)
 
 ---
 ### Config
