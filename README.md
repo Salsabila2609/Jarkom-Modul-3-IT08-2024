@@ -418,6 +418,7 @@ echo "$subnet" > /etc/dhcp/dhcpd.conf
 Gunakan `ping harkonen.it08.com` dan `atreides.it08.com` untuk pengecekan domain di client.
 
 **Result 1-5**
+
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/b4bf9dba-faaf-402d-8134-9b07017b0e17)
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/e09181ee-cd7e-4d93-8d86-91fa97eebf94)
