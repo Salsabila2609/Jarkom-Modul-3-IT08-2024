@@ -418,6 +418,9 @@ echo "$subnet" > /etc/dhcp/dhcpd.conf
 Gunakan `ping harkonen.it08.com` dan `atreides.it08.com` untuk pengecekan domain di client.
 
 **Result 1-5**
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/b4bf9dba-faaf-402d-8134-9b07017b0e17)
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/e09181ee-cd7e-4d93-8d86-91fa97eebf94)
 
 ---
 ### Soal 6
@@ -475,6 +478,18 @@ echo 'server {
 Gunakan `lynx localhost` untuk memeriksa deployment pada worker.
 
 **Result**
+
+Vladimir
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/a0ec390d-238a-4021-a811-e6577065bb9b)
+
+Rabban
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/4714a588-44a6-4569-b3dc-2dcd8355694b)
+
+Feyd
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/3ec5a252-7b9f-4ec8-b8ac-0e32f41b2bb4)
 
 ---
 ### Nomor 7
@@ -555,6 +570,14 @@ Gunakan `ab -n 5000 -c 150 http://harkonen.it08.com/` untuk testing.
 
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/15573312-20b0-4013-977d-000dea366577)
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/806dd2f4-9272-4f15-8f03-b20e4a6006fe)
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/a4177444-2d4e-4017-9e95-6371f1ba6591)
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/002ef66e-7408-46e2-aafa-d7335d9f70c7)
+
 ---
 ### Nomor 8
 > Karena diminta untuk menuliskan peta tercepat menuju spice, buatlah analisis hasil testing dengan 500 request dan 50 request/second masing-masing algoritma Load Balancer dengan ketentuan sebagai berikut:
@@ -577,6 +600,8 @@ server 192.237.1.3;
 
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/b185d2b5-ca71-4d2a-be80-fb4619240263)
+
 **Generic hash**
 ```
 upstream worker {
@@ -588,6 +613,8 @@ server 192.237.1.3;
 ```
 
 **Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/b40bf4d5-aa99-47f2-a7bc-61fcb295e8ad)
 
 **Least Connection**
 ```
@@ -601,6 +628,8 @@ server 192.237.1.3;
 
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/41f6da26-3ab9-4780-84a5-a20fe328a562)
+
 **IP hash**
 ```
 upstream worker {
@@ -613,10 +642,15 @@ server 192.237.1.3;
 
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/75e2740f-7e73-4adf-8926-1d9e36004891)
+
 **Grafik**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/4ac1ca04-5876-4b42-822e-acc1b3141fd4)
 
 **Kesimpulan**
 
+Berdasarkan hasil RPS, algoritma Least Connection menunjukkan performa terbaik dengan RPS sebesar 861.23, diikuti oleh IP Hash (815.64), Generic Hash (768.61), dan Round Robin (631.73). Least Connection unggul karena mendistribusikan permintaan ke server dengan koneksi aktif paling sedikit, memastikan beban kerja terdistribusi lebih merata dan optimal, sehingga meningkatkan responsivitas dan kecepatan layanan. Algoritma ini sangat efektif dalam lingkungan dengan beban kerja yang bervariasi, meskipun membutuhkan pemantauan aktif terhadap jumlah koneksi.
 
 ---
 ### Nomor 9
