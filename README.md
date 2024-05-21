@@ -985,19 +985,21 @@ Cek isi tabel dan data pada database.
 
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/7ca8adba-33c9-4ec1-a109-1a58701a1033)
+
 Cek deployment pada setiap worker laravel menggunakan `lynx localhost:8001/8002/8003`.
 
 **Result**
 
-Vladimir
+Leto
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/f0f96803-85b5-4da1-a027-611ae95164a3)
 
-Rabban
+Duncan
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/e968379e-11d8-47e5-ab3d-e5c68e57c7f3)
 
-Feyd
+Jessica
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/daebba18-0507-440f-80fc-19e7132e2038)
 
@@ -1025,6 +1027,10 @@ Gunakan `ab -n 100 -c 10 -p register.json -T application/json http://192.237.2.1
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/33b21904-b11e-47b1-b792-e3d836d14409)
 
+**Kesimpulan**
+
+Testing ini menunjukkan bahwa server mengalami masalah signifikan dalam menangani permintaan POST /auth/register, terutama disebabkan oleh penggunaan username yang sama untuk setiap permintaan, menyebabkan 99 dari 100 permintaan gagal. RPS yang rendah dan waktu respon yang sangat tinggi menandakan bahwa server tidak dapat menangani beban ini dengan efisien.
+
 ---
 ### Nomor 16
 > b. POST /auth/login
@@ -1046,6 +1052,10 @@ Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://192.237.2.1:80
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/b4b334d2-60dd-4497-87c8-f6a1aab5c2ee)
 
+**Kesimpulan**
+
+Testing ini menunjukkan bahwa server mengalami masalah dalam menangani permintaan POST /auth/login, dengan 27 dari 100 permintaan gagal. RPS yang rendah (2.17) dan waktu respon yang sangat tinggi (4.6 detik) menandakan bahwa server tidak dapat menangani beban ini dengan efisien.
+
 ---
 ### Nomor 17
 > c. GET /me
@@ -1062,6 +1072,10 @@ Gunakan `ab -n 100 -c 10 -H "Authorization: Bearer $token" http://192.237.2.1:80
 **Result**
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/030b7555-2f23-4958-bf66-0c611113556f)
+
+**Kesimpulan**
+
+Testing ini menunjukkan bahwa server mengalami masalah dalam menangani permintaan GET /me, dengan 63 dari 100 permintaan gagal. Namun, terlihat ada peningkatan RPS dan time per request yang lebih baik dibanding sebelumnya. Menunjukan bahwa server dapat menangani permintaan ini dengan lebih baik.
 
 ---
 ### Nomor 18
@@ -1093,6 +1107,20 @@ service nginx restart
 Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://atreides.it08.com/api/auth/login` untuk testing.
 
 **Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/e5ce8d12-6e7b-4909-82b5-85d793ef24b1)
+
+Leto
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/3ce6546a-c04e-4155-b63a-34d8bc1ef001)
+
+Duncan
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/45f73aa0-0196-4906-affa-4a09655ad3e0)
+
+Jessica
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/ae7cc24d-b183-4a1b-9cbe-029f5a1d0726)
 
 ---
 ### Nomor 19
@@ -1185,6 +1213,10 @@ Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://atreides.it08.
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/d2bf1c61-55dd-4cbf-933e-0bb6aa5a9091)
 
+**Kesimpulan**
+
+Hasil analisis menunjukkan bahwa perbedaan waktu request per second pada setiap percobaan tidak begitu signifikan. Ini bisa disebabkan oleh kualitas server yang tidak merespons secara berarti ketika diberikan beberapa konfigurasi yang tidak sesuai dengan performanya. Beberapa faktor yang dapat menjelaskan fenomena ini meliputi kapasitas sumber daya terbatas, di mana server atau node pekerja memiliki keterbatasan dalam kapasitas sumber daya. Dalam kondisi seperti ini, peningkatan konfigurasi seperti pm.max_children, pm.start_servers, dan lainnya mungkin tidak memiliki dampak yang mencolok karena sudah mencapai batas kapasitas fisik atau sumber daya yang tersedia.
+
 ---
 ### Nomor 20
 > Nampaknya hanya menggunakan PHP-FPM tidak cukup untuk meningkatkan performa dari worker maka implementasikan Least-Conn pada Stilgar. Untuk testing kinerja dari worker tersebut dilakukan sebanyak 100 request dengan 10 request/second.
@@ -1218,6 +1250,10 @@ Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://atreides.it08.
 **Result**
 
 ![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/03d5eac9-31f7-4b51-93ec-5ba7126d7087)
+
+**Kesimpulan**
+
+Penggunaan algoritma least connection membantu meningkatkan kinerja worker, terlihat dari kenaikan RPS yang cukup signifikan dan time per request yang lebih baik daripada sebelumnya.
 
 ---
 
