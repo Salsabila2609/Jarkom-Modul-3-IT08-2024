@@ -205,3 +205,223 @@
   apt-get install jq -y
   ```
 ---
+### Soal 1
+> Planet Caladan sedang mengalami krisis karena kehabisan spice, klan atreides berencana untuk melakukan eksplorasi ke planet arakis dipimpin oleh duke leto mereka meregister domain name atreides.yyy.com untuk worker Laravel mengarah pada Leto Atreides . Namun ternyata tidak hanya klan atreides yang berusaha melakukan eksplorasi, Klan harkonen sudah mendaftarkan domain name harkonen.yyy.com untuk worker PHP (0) mengarah pada Vladimir Harkonen.
+> Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
+
+Pertama, lakukan setup awal. Selanjutnya, menetapkan domain record untuk harkonen.it08.com ke php worker dan atreides.it08.com ke laravel worker, yang dalam pengerjaan ini domain tersebut mengarah ke IP worker 192.237.x.1.
+
+**Script Irulan (DNS Server)**
+```
+echo "zone \"atreides.it08.com\" {
+	type master;
+	file \"/etc/bind/jarkom/atreides.it08.com\";
+};
+
+zone \"harkonen.it08.com\" {
+	type master;
+	file \"/etc/bind/jarkom/harkonen.it08.com\";
+};
+" > /etc/bind/named.conf.local
+
+mkdir /etc/bind/jarkom
+
+atreides="
+;
+;BIND data file for local loopback interface
+;
+\$TTL    604800
+@    IN    SOA    atreides.it08.com. root.atreides.it08.com. (
+        2        ; Serial
+                604800        ; Refresh
+                86400        ; Retry
+                2419200        ; Expire
+                604800 )    ; Negative Cache TTL
+;                   
+@    IN    NS    atreides.it08.com.
+@       IN    A    192.237.2.1
+"
+echo "$atreides" > /etc/bind/jarkom/atreides.it08.com
+
+harkonen="
+;
+;BIND data file for local loopback interface
+;
+\$TTL    604800
+@    IN    SOA    harkonen.it08.com. root.harkonen.it08.com. (
+        2        ; Serial
+                604800        ; Refresh
+                86400        ; Retry
+                2419200        ; Expire
+                604800 )    ; Negative Cache TTL
+;                   
+@    IN    NS    harkonen.it08.com.
+@       IN    A    192.237.1.1
+"
+echo "$harkonen" > /etc/bind/jarkom/harkonen.it08.com
+
+service bind9 restart
+```
+---
+
+### Soal 1
+> Semua CLIENT harus menggunakan konfigurasi dari DHCP Server.
+
+**Script Arakis (DHCP Relay)**
+```
+relay="SERVERS=\"192.237.3.2\" 
+INTERFACES=\"eth1 eth2 eth3 eth4\"
+OPTIONS=\"\"
+"
+echo "$relay" > /etc/default/isc-dhcp-relay
+
+echo net.ipv4.ip_forward=1 > /etc/sysctl.conf
+
+service isc-dhcp-relay restart
+```
+---
+
+### Soal 2
+> Client yang melalui House Harkonen mendapatkan range IP dari [prefix IP].1.14 - [prefix IP].1.28 dan [prefix IP].1.49 - [prefix IP].1.70.
+
+**Script Mohiam (DHCP Server)**
+```
+subnet 192.237.1.0 netmask 255.255.255.0 {
+    range 192.237.1.14 192.237.1.28;
+    range 192.237.1.49 192.237.1.70;
+    option routers 192.237.1.0;
+}
+
+subnet 192.237.2.0 netmask 255.255.255.0 {
+}
+
+subnet 192.237.3.0 netmask 255.255.255.0 {
+}
+
+subnet 192.237.4.0 netmask 255.255.255.0 {
+}
+
+echo "$subnet" > /etc/dhcp/dhcpd.conf
+
+service isc-dhcp-server restart
+```
+---
+
+### Soal 3
+> Client yang melalui House Atreides mendapatkan range IP dari [prefix IP].2.15 - [prefix IP].2.25 dan [prefix IP].2 .200 - [prefix IP].2.210.
+
+**Script Mohiam (DHCP Server)**
+```
+subnet 192.237.1.0 netmask 255.255.255.0 {
+    range 192.237.1.14 192.237.1.28;
+    range 192.237.1.49 192.237.1.70;
+    option routers 192.237.1.0;
+}
+
+subnet 192.237.2.0 netmask 255.255.255.0 {
+    range 192.237.2.15 192.237.2.25;
+    range 192.237.2.200 192.237.2.210;
+    option routers 192.237.2.0;
+}
+
+subnet 192.237.3.0 netmask 255.255.255.0 {
+}
+
+subnet 192.237.4.0 netmask 255.255.255.0 {
+}
+
+echo "$subnet" > /etc/dhcp/dhcpd.conf
+
+service isc-dhcp-server restart
+```
+---
+
+### Soal 4
+> Client mendapatkan DNS dari Princess Irulan dan dapat terhubung dengan internet melalui DNS tersebut.
+
+Ubah konfigurasi DHCP Server agar mengarah ke IP DNS Server (192.237.3.1).
+
+**Script Mohiam (DHCP Server)**
+```
+subnet 192.237.1.0 netmask 255.255.255.0 {
+    range 192.237.1.14 192.237.1.28;
+    range 192.237.1.49 192.237.1.70;
+    option routers 192.237.1.0;
+    option broadcast-address 192.237.1.255;
+    option domain-name-servers 192.237.3.1;
+}
+
+subnet 192.237.2.0 netmask 255.255.255.0 {
+    range 192.237.2.15 192.237.2.25;
+    range 192.237.2.200 192.237.2.210;
+    option routers 192.237.2.0;
+    option broadcast-address 192.237.2.255;
+    option domain-name-servers 192.237.3.1;
+}
+
+subnet 192.237.3.0 netmask 255.255.255.0 {
+}
+
+subnet 192.237.4.0 netmask 255.255.255.0 {
+}
+```
+
+Selanjutnya masukkan konfigurasi DNS Server pada Irulan.
+
+**Script Irulan (DNS Server)**
+```
+forward="options {
+directory \"/var/cache/bind\";
+forwarders {
+  	   192.168.122.1;
+};
+
+allow-query{any;};
+listen-on-v6 { any; };
+};
+"
+echo "$forward" > /etc/bind/named.conf.options
+```
+---
+### Soal 5
+> Durasi DHCP server meminjamkan alamat IP kepada Client yang melalui House Harkonen selama 5 menit sedangkan pada client yang melalui House Atreides selama 20 menit. Dengan waktu maksimal dialokasikan untuk peminjaman alamat IP selama 87 menit.
+
+**Script Mohiam (DHCP Server)**
+```
+subnet 192.237.1.0 netmask 255.255.255.0 {
+    range 192.237.1.14 192.237.1.28;
+    range 192.237.1.49 192.237.1.70;
+    option routers 192.237.1.0;
+    option broadcast-address 192.237.1.255;
+    option domain-name-servers 192.237.3.1;
+    default-lease-time 300;
+    max-lease-time 5220;
+}
+
+subnet 192.237.2.0 netmask 255.255.255.0 {
+    range 192.237.2.15 192.237.2.25;
+    range 192.237.2.200 192.237.2.210;
+    option routers 192.237.2.0;
+    option broadcast-address 192.237.2.255;
+    option domain-name-servers 192.237.3.1;
+    default-lease-time 1200;
+    max-lease-time 5220;
+}
+
+subnet 192.237.3.0 netmask 255.255.255.0 {
+}
+
+subnet 192.237.4.0 netmask 255.255.255.0 {
+}
+echo "$subnet" > /etc/dhcp/dhcpd.conf
+```
+
+**Result 1-5**
+
+---
+
+
+
+
+
+
