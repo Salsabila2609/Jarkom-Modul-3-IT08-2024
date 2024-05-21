@@ -670,6 +670,8 @@ server 192.237.1.3;
 ```
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/b733b425-4e4a-46f8-8338-fb7f74cae2eb)
+
 **2 Worker**
 ```
 upstream worker {
@@ -679,6 +681,8 @@ server 192.237.1.2;
 ```
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/a5c0ac15-5c6d-4339-a899-3bdbc6d3170d)
+
 **1 Worker**
 ```
 upstream worker {
@@ -687,7 +691,15 @@ server 192.237.1.1;
 ```
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/b90e4216-628b-4f43-9192-9a4c7df30eab)
+
 **Grafik**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/a887ee6c-fd55-43ec-8048-91fc7d5b6c7b)
+
+**Kesimpulan**
+
+Dalam konteks pengujian ini, didapatkan bahwa bahwa performa RPS tertinggi dicapai saat hanya menggunakan 1 worker dengan RPS sebesar 854.39. Ketika jumlah worker ditingkatkan menjadi 2 dan 3, RPS menurun masing-masing menjadi 732.43 dan 681.23. Hal ini dapat terjadi karena semakin sedikit jumlah worker, semakin sedikit juga beban kerja yang harus ditangani oleh masing-masing worker, sehingga dapat meningkatkan kecepatan request per second yang dihasilkan. Selain itu, mengurangi jumlah worker justru meningkatkan efisiensi dalam hal RPS, yang mungkin diakibatkan oleh pengurangan overhead komunikasi antar worker.
 
 ---
 ### Nomor 10
@@ -729,14 +741,6 @@ proxy_pass http://worker;
 
        auth_basic "Restricted Content";
        auth_basic_user_file /etc/nginx/supersecret/htpasswd;
-}
-location ~ /dune {
-proxy_pass https://www.dunemovie.com.au;
-proxy_set_header Host www.dunemovie.com.au;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header X-Forwarded-Proto $scheme;
-}
 } ' > /etc/nginx/sites-available/lb_php
 
 ln -sf /etc/nginx/sites-available/lb_php /etc/nginx/sites-enabled/
@@ -751,6 +755,12 @@ service nginx restart
 Gunakan `lynx http://harkonen.it08.com/` di client.
 
 **Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/2a7a7526-a5f6-45eb-926d-7c8173a0832d)
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/f4e3e990-98ed-4712-bd77-4022e6bb2e18)
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/6a81b0e9-8499-481d-923a-ba48eb092c4e)
 
 ---
 ### Nomor 11
@@ -773,6 +783,9 @@ service nginx restart
 Gunakan `lynx http://harkonen.it08.com/dune` di client.
 
 **Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/db58eb36-866e-4018-a18c-d17419866a74)
+
 ---
 ### Nomor 12
 > Selanjutnya LB ini hanya boleh diakses oleh client dengan IP [Prefix IP].1.37, [Prefix IP].1.67, [Prefix IP].2.203, dan [Prefix IP].2.207.
@@ -813,9 +826,13 @@ hwaddress ether e2:27:eb:be:1b:07
 echo "$config" > /etc/network/interfaces
 ```
 
-Gunakan `ip a` dan `lynx http://harkonen.it08.com/` untuk melihat hasilnya.
+Gunakan `lynx http://harkonen.it08.com/` untuk melihat hasilnya.
 
 **Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/fbda7291-78fd-40ea-b8a9-1dfeb71c2b90)
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/c2afccb9-6f1f-4735-bf8c-ea447ad771b2)
 
 ---
 ### Nomor 13
@@ -845,6 +862,8 @@ service mysql restart
 Gunakan `mariadb --host=192.237.4.2 --port=3306 --user=kelompokit08 --password=passwordit08` pada setiap worker laravel untuk mengakses database.
 
 **Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/2461395f-ed54-4737-aa5a-d6df855eacbb)
 
 ---
 ### Nomor 14
@@ -966,6 +985,7 @@ Cek isi tabel dan data pada database.
 
 **Result**
 
+
 Cek deployment pada setiap worker laravel menggunakan `lynx localhost:8001/8002/8003`.
 
 **Result**
@@ -991,6 +1011,8 @@ Gunakan `ab -n 100 -c 10 -p register.json -T application/json http://192.237.2.1
 
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/33b21904-b11e-47b1-b792-e3d836d14409)
+
 ---
 ### Nomor 16
 > b. POST /auth/login
@@ -1010,6 +1032,8 @@ Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://192.237.2.1:80
 
 **Result**
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/b4b334d2-60dd-4497-87c8-f6a1aab5c2ee)
+
 ---
 ### Nomor 17
 > c. GET /me
@@ -1024,6 +1048,8 @@ token=$(cat login_output.txt | jq -r '.token')
 Gunakan `ab -n 100 -c 10 -H "Authorization: Bearer $token" http://192.237.2.1:8001/api/me` untuk testing.
 
 **Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/030b7555-2f23-4958-bf66-0c611113556f)
 
 ---
 ### Nomor 18
@@ -1058,9 +1084,15 @@ Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://atreides.it08.
 
 Vladimir
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/f0f96803-85b5-4da1-a027-611ae95164a3)
+
 Rabban
 
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/e968379e-11d8-47e5-ab3d-e5c68e57c7f3)
+
 Feyd
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/daebba18-0507-440f-80fc-19e7132e2038)
 
 ---
 ### Nomor 19
@@ -1095,6 +1127,10 @@ pm.max_spare_servers = 6' > /etc/php/8.0/fpm/pool.d/www.conf
 service php8.0-fpm restart
 ```
 
+**Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/fe84ddc9-2998-4e3c-afce-d27297286442)
+
 **Script test2.sh**
 ```
 echo '[www]
@@ -1116,6 +1152,10 @@ pm.max_spare_servers = 18' > /etc/php/8.0/fpm/pool.d/www.conf
 
 service php8.0-fpm restart
 ```
+
+**Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/67af639d-5cc1-4a00-98e0-a1d183056020)
 
 **Script test3.sh**
 ```
@@ -1143,11 +1183,7 @@ Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://atreides.it08.
 
 **Result**
 
-test1.sh
-
-test2.sh
-
-test3.sh
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/d2bf1c61-55dd-4cbf-933e-0bb6aa5a9091)
 
 ---
 ### Nomor 20
@@ -1180,6 +1216,8 @@ service nginx restart
 Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://atreides.it08.com/api/auth/login` untuk testing.
 
 **Result**
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/03d5eac9-31f7-4b51-93ec-5ba7126d7087)
 
 ---
 
