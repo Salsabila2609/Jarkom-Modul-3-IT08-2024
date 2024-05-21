@@ -985,10 +985,22 @@ Cek isi tabel dan data pada database.
 
 **Result**
 
-
 Cek deployment pada setiap worker laravel menggunakan `lynx localhost:8001/8002/8003`.
 
 **Result**
+
+Vladimir
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/f0f96803-85b5-4da1-a027-611ae95164a3)
+
+Rabban
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/e968379e-11d8-47e5-ab3d-e5c68e57c7f3)
+
+Feyd
+
+![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/daebba18-0507-440f-80fc-19e7132e2038)
+
 
 ---
 ### Nomor 15
@@ -1081,18 +1093,6 @@ service nginx restart
 Gunakan `ab -n 100 -c 10 -p login.json -T application/json http://atreides.it08.com/api/auth/login` untuk testing.
 
 **Result**
-
-Vladimir
-
-![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/f0f96803-85b5-4da1-a027-611ae95164a3)
-
-Rabban
-
-![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/e968379e-11d8-47e5-ab3d-e5c68e57c7f3)
-
-Feyd
-
-![image](https://github.com/Salsabila2609/Jarkom-Modul-3-IT08-2024/assets/128382995/daebba18-0507-440f-80fc-19e7132e2038)
 
 ---
 ### Nomor 19
